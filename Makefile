@@ -62,6 +62,9 @@ superuser-prod:
 collectstatic-prod:
 	docker compose -f docker-compose.prod.yml exec ecom_prod_api python3 manage.py collectstatic --noinput --clear
 
+down-prod:
+	docker compose -f docker-compose.prod.yml down
+
 down-prod-v:
 	docker compose -f docker-compose.prod.yml down -v
 
