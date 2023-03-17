@@ -47,6 +47,15 @@ restart-nginx-dev:
 
 
 # For Docker Production Commands
+build-prod:
+	docker compose -f docker-compose.prod.yml up --build
+
+up-prod:
+	docker compose -f docker-compose.prod.yml up
+
+restart-prod:
+	docker compose -f docker-compose.prod.yml up -d
+
 show-logs-prod:
 	docker compose -f docker-compose.prod.yml logs
 
