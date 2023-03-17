@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -o errexit
+
+set -o nounset
+
+worker_ready(){
+    celery -A coreAPI inspect ping
+}
+
+until worker_ready; do 
+    >&2 echo "Celery worker not Available :-("
+    sleep 1
+
+done
+>&2 echo "Celery worker are Available and Ready.. :-)"
+
+
+flower \
+    --app=coreAPI \
+    --broker="${CELERY_BROKER}"

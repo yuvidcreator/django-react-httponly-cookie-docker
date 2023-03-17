@@ -1,0 +1,118 @@
+version: "3.3"
+
+services:
+    ecom_dev_api:
+        image: ecom_dev_api:ecom_dev-api-v1
+        build:
+            context: .
+            dockerfile: ./docker/local/django/Dockerfile
+        command: /start
+        volumes:
+            - .:/app
+            - ecom_dev_static_volume:/app/staticfiles
+            - ecom_dev_media_volume:/app/mediafiles
+        expose:
+            - "8002"
+        env_file:
+            - .env
+        depends_on:
+            - ecom_dev_postgres-db
+            - redis
+        networks:
+            - ecom_dev-djreact
+
+    ecom_dev_client:
+        image: ecom_dev_client:ecom_dev-react-v1
+        build:
+            context: ./client
+            dockerfile: ./docker/local/Dockerfile
+        restart: on-failure
+        volumes:
+            - ./client:/app
+            - /app/node_modules
+        env_file:
+            - .env
+        networks:
+            - ecom_dev-djreact
+
+    ecom_dev_postgres-db:
+        image: postgres:14-alpine
+        restart: on-failure
+        ports:
+            - "5432:5432"
+        volumes:
+            # Persisting the DB Data for CI-CD 
+            - ecom_dev_postgres-db:/var/lib/postgresql/ecomdevdata
+        env_file:
+            - .env
+        environment:
+            - POSTGRES_DB=${DEV_DB_NAME}
+            - POSTGRES_USER=${DEV_DB_USER}
+            - POSTGRES_PASSWORD=${DEV_DB_PASS}
+        networks:
+            - ecom_dev-djreact
+
+    redis:
+        image: redis:5-alpine
+        restart: on-failure
+        networks:
+            - ecom_dev-djreact
+
+    ecom_dev_celery_worker:
+        image: ecom_dev_celery_worker:ecom_dev-celery_worker-v1
+        build:
+            context: .
+            dockerfile: ./docker/local/django/Dockerfile
+        command: /start-celeryworker
+        volumes:
+            - .:/app
+        env_file: 
+            - .env
+        depends_on:
+            - redis
+            - ecom_dev_postgres-db
+        networks:
+            - ecom_dev-djreact
+
+    ecom_dev_flower:
+        image: ecom_dev_flower:ecom_dev-flower-v1
+        build:
+            context: .
+            dockerfile: ./docker/local/django/Dockerfile
+        command: /start-flower
+        volumes: 
+            - .:/app
+        env_file:
+            - .env
+        ports:
+            - "5557:5555"
+        depends_on:
+                - redis
+                - ecom_dev_postgres-db
+        networks:
+            - ecom_dev-djreact
+
+    ecom_dev_nginx:
+        image: ecom_dev_nginx:ecom_dev-nginx-v1
+        restart: on-failure
+        depends_on:
+            - ecom_dev_api
+        volumes:
+            - ecom_dev_static_volume:/app/staticfiles
+            - ecom_dev_media_volume:/app/mediafiles
+        build:
+            context: ./docker/local/nginx
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        networks:
+            - ecom_dev-djreact
+
+networks:
+    ecom_dev-djreact:
+        driver: bridge
+
+volumes:
+    ecom_dev_postgres-db:
+    ecom_dev_static_volume:
+    ecom_dev_media_volume:

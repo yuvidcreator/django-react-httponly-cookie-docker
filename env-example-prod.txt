@@ -1,0 +1,105 @@
+SECRET_KEY=jashdaghdagdhfad675w7wr6v76cqw5vq
+PRODUCTION_SECRETE_KEY=xxxxxxxxxxxxxxxxxxxxxxx
+
+# For Pre Production Server
+DEV_PAHSE=prod
+DEBUG=False
+
+# For Staging or Live Testing server
+# DEV_PAHSE=dev
+# DEBUG=False
+
+# For Local Dev
+# DEV_PAHSE=dev
+# DEBUG=True
+
+ALLOWED_HOSTS="127.0.0.1 [::1] localhost api your_domain.com www.your_domain.com"
+SQLITE_URL=sqlite:///sqlite.db
+
+# SMTP Email Bckend for Local Dev
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=hsdhagsdhagdsh
+EMAIL_HOST_PASSWORD=xxxxxxx
+EMAIL_FROM=your_name@your_domain.com
+
+DOMIAN=falconcourierservice.com
+SITE_NAME=Falcon Courier Services
+
+# Celery Email Backend for Docker Development
+CLRY_EMAIL_BACKEND=djcelery_email.backends.CeleryEmailBackend
+CLRY_EMAIL_HOST=smtp.mailtrap.io
+CLRY_EMAIL_PORT=2525
+CLRY_EMAIL_USE_TLS=True
+CLRY_EMAIL_HOST_USER=hsdhagsdhagdsh
+CLRY_EMAIL_HOST_PASSWORD=xxxxxxx
+CLRY_EMAIL_FROM=your_name@your_domain.com
+
+# Celery Email Backend for Docker Production
+CLRY_PROD_EMAIL_BACKEND=djcelery_email.backends.CeleryEmailBackend
+CLRY_PROD_EMAIL_HOST=smtp.mailtrap.io
+CLRY_PROD_EMAIL_PORT=2525
+CLRY_PROD_EMAIL_USE_TLS=True
+CLRY_PROD_EMAIL_HOST_USER=hsdhagsdhagdsh
+CLRY_PROD_EMAIL_HOST_PASSWORD=xxxxxxx
+CLRY_PROD_EMAIL_FROM=your_name@your_domain.com
+
+# PGSQL DB for Local Development
+DEV_DB_ENGINE=django.db.backends.postgresql
+DEV_DB_NAME=testdb
+DEV_DB_USER=admin
+DEV_DB_PASS=admin123
+DEV_DB_HOST=postgres-db
+DEV_DB_PORT=5432
+
+# PGSQL DB for Docker Development
+PROD_DB_ENGINE=django.db.backends.postgresql
+PROD_DB_NAME=devdb
+PROD_DB_USER=admin
+PROD_DB_PASS=admin123
+PROD_DB_HOST=postgres-db
+PROD_DB_PORT=5432
+
+# PostgreSQL DB for Docker Prodcution
+POSTGRES_ENGINE=django.db.backends.postgresql
+POSTGRES_DB=proddb
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin123
+POSTGRES_DB_HOST=prod-db
+POSTGRES_DB_PORT=5432
+
+SIGNING_KEY=sdddadasdwqwqwsasdmadm
+
+ALLOWED_DOMAIN=https://nextapp.vercel.com
+API_URL=http://localhost
+
+# Jazzmin UI for Admin Panel
+JAZZMIN_LIST_PER_PAGE=10
+
+# Celery
+CELERY_BROKER=redis://redis:6379/0
+# CELERY_BACKEND=redis://localhost:6379
+CELERY_BACKEND=redis://redis:6379/0
+# CELERY_RESULT_BACKEND=django-db
+CELERY_TIMEZONE=Asia/Kolkata
+# CELERY_BEAT_SCHEDULER=django_celery_beat.schedulers:DatabaseScheduler
+
+account_sid=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+auth_token=xxxxxxxxcccccccccccc
+from_number=+173343434
+
+account_sid_prod=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+auth_token_prod=xxxxxxxxcccccccccccc
+from_number_prod=+173343434
+
+RAZORPAY_LIVE_KEY_ID=assssssssssss
+RAZORPAY_LIVE_KEY_SECRET=vssddsfsdff
+
+RAZORPAY_TEST_KEY_ID=dfsdfsdfsdfsdf
+RAZORPAY_TEST_KEY_SECRET=4cvcxvcvxcvxv
+
+RAZORPAY_WEBHOOK_KEY_SECRET=zdasewewe
+
+PAYMENT_CHECKOUT_TIME_IN_SECONDS=600

@@ -1,0 +1,45 @@
+FROM python:3.11-alpine
+
+LABEL maintainer="webinoxmedia.com"
+LABEL description="Falcon Courier Services Full Stack App"
+
+ENV PYTHONDONTWRITEBYTECODE 1
+
+ENV PYTHONUNBUFFERED 1
+
+ENV APP_HOME=/app
+RUN mkdir -p $APP_HOME
+RUN mkdir -p $APP_HOME/staticfiles
+WORKDIR $APP_HOME
+
+COPY ./requirements.txt /requirements.txt
+
+RUN python -m venv /env && \
+    /env/bin/pip install --upgrade pip && \
+    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache --virtual .tmp-deps \
+        build-base postgresql-dev musl-dev linux-headers && \
+    /env/bin/pip install --no-cache-dir -r /requirements.txt && \
+    apk del .tmp-deps && \
+    adduser --disabled-password --no-create-home yuvi && \
+    copy ./docker/local/django/entrypoint /entrypoint && \
+    copy ./docker/local/django/start /start && \
+    chown -R yuvi:yuvi /entrypoint && \
+    chown -R yuvi:yuvi /start && \
+    chmod -R 755 /entrypoint && \
+    chmod -R 755 /start && \
+    chmod -R +x /entrypoint && \
+    chmod -R +x /start && \
+    copy ./docker/local/django/celery/worker/start /start-celeryworker && \
+    copy COPY ./docker/local/django/celery/flower/start /start-flower && \
+    chown -R yuvi:yuvi /start-celeryworker && \
+    chown -R yuvi:yuvi /start-flower && \
+    chmod -R 755 start-celeryworker && \
+    chmod -R 755 /start-flower && \
+    chmod -R +x start-celeryworker && \
+    chmod -R +x /start-flower
+
+USER yuvi
+
+# CMD ["run.sh"]
+ENTRYPOINT [ "/entrypoint"]

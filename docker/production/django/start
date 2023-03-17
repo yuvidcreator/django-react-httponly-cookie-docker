@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -o errexit
+
+set -o pipefail
+
+set -o nounset
+
+# source ./app/env/bin/activate
+
+python3 manage.py migrate --noinput
+python3 manage.py collectstatic --noinput
+# python3 manage.py runserver 0.0.0.0:8000
+gunicorn coreAPI.wsgi --bind 0.0.0.0:8001 --workers 4 --threads 4

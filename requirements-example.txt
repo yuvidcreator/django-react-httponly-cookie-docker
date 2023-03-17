@@ -1,0 +1,43 @@
+django>=3.2.9,<4.1
+django-environ
+djangorestframework
+djangorestframework-simplejwt
+# djoser
+django-cors-headers
+django-filter
+django-jazzmin==2.4.8
+# django-countries
+# django-autoslug
+#django-dbbackup
+Pillow
+psycopg2-binary
+gunicorn
+requests
+six
+typing-extensions
+cryptography
+flake8
+black
+isort
+wheel
+twilio
+pytest-django
+pytest-factoryboy
+Faker
+pytest-cov
+redis==3.5.3
+celery==4.4.7
+flower==0.9.7
+django-celery-email==3.0.0
+argh==0.26.2
+PyYAML==5.3.1
+watchdog==1.0.2
+
+drf-yasg
+jsonschema==2.6.0
+rq==1.10.1
+rq-scheduler==0.11.0
+schedule==1.1.0
+sentry-sdk
+
+instamojo_wrapper
