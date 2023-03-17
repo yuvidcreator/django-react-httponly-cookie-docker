@@ -27,7 +27,7 @@ RUN apt-get update \
 # set user without root access
 RUN useradd -r wmds
 
-COPY ./requirements-docker.txt ${APP_HOME}
+COPY ./requirements.txt ${APP_HOME}
 
 RUN chown -R wmds:wmds ${APP_HOME}
 RUN chown -R wmds:wmds ${APP_HOME} .
@@ -35,7 +35,7 @@ RUN chown -R wmds:wmds ${APP_HOME} *
 
 RUN pip3 install --no-cache-dir --upgrade pip
 
-RUN pip3 install --no-cache-dir -r requirements-docker.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY ./docker/production/django/entrypoint /entrypoint
 RUN chown -R wmds:wmds /entrypoint
@@ -67,7 +67,7 @@ USER wmds
 
 # RUN pip3 install --no-cache-dir --upgrade pip
 
-# RUN pip3 install --no-cache-dir -r requirements-docker.txt
+# RUN pip3 install --no-cache-dir -r requirements.txt
 
 
 ENTRYPOINT [ "/entrypoint"]
