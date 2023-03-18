@@ -1,1 +1,1 @@
-export const REST_API_URL = prosses.env.REACT_APP_API_URL
+export const REST_API_URL = process.env.REACT_APP_API_URL
